@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2019_10_05_180544) do
     t.string "title"
     t.integer "duration"
     t.string "genre"
-    t.text "description"
+    t.text "description"    
     t.string "trailer"
     t.bigint "user_id"
     t.datetime "created_at", null: false

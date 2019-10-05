@@ -83,11 +83,6 @@ class VideoForm extends React.Component {
             />
           </Form.Group>
           <Form.Checkbox required label="I agree to the Terms and Conditions" />
-          <Message
-            success
-            header='Success'
-            content="Video successfully uploaded!"
-         />
           <Form.Button color="red">Submit</Form.Button>
         </Form>
       </div>
