@@ -1,7 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { AuthConsumer, } from "../providers/AuthProvider";
-import { Menu, } from 'semantic-ui-react'
-import { Link, withRouter, } from 'react-router-dom'
+import { Menu, Image, Dropdown, Button, Container, } from 'semantic-ui-react';
+import { Link, withRouter, } from 'react-router-dom';
+import logo from "../images/logo.png";
+import logo2 from "../images/logo2.png";
 
 class Navbar extends React.Component {
   
@@ -10,12 +12,28 @@ class Navbar extends React.Component {
     
     if (user) {
       return (
+        <Container>
+
         <Menu.Menu position='right'>
-          <Menu.Item
-            name='logout'
-            onClick={ () => handleLogout(this.props.history) }
-          />
+          <Image style={{width: "35px", height: "45px", paddingTop: "8px",}}  src={logo2} />
+          <Dropdown style={{paddingRight: "10px", paddingTop: "10px"}}>
+            <Dropdown.Menu>
+            <Dropdown.Item>
+              User
+            </Dropdown.Item>
+            <Dropdown.Divider/>  
+            <Dropdown.Item
+            onClick={ () => handleLogout(this.props.history)}
+            >
+              Logout
+            </Dropdown.Item>
+            </Dropdown.Menu>
+            </Dropdown>
+            <Menu.Item>
+            <Button color="red">Upload Video</Button>
+            </Menu.Item>
         </Menu.Menu>
+        </Container>
       )
     } else {
       return (
@@ -41,18 +59,14 @@ class Navbar extends React.Component {
   
   render() {
     return (
-      <div>
-        <Menu pointing secondary>
+      <Container>
+        <Menu secondary>
           <Link to='/'>
-            <Menu.Item
-              name='home'
-              id='home'
-              active={this.props.location.pathname === '/'}
-            />
+            <Image style={{ paddingTop: "10px"}} src={logo}  />
           </Link>
             { this.rightNavItems() }
         </Menu>
-      </div>
+      </Container>
     )
   }
 }
