@@ -1,16 +1,32 @@
 import React from "react";
 import axios from "axios";
+import { AuthConsumer } from '../providers/AuthProvider'
 import { Form, Header, Message, } from "semantic-ui-react";
+import { withRouter, } from 'react-router-dom'
 
 class VideoForm extends React.Component {
-  defaultValues = { video: "", title: "", genre: "", description: "", };
-  state = { ...this.defaultValues, };
+//   defaultValues = { video: "", title: "", genre: "", description: "", id: null };
+//   state = { ...this.defaultValues, };
+     state = { videos: [] }
+  componentDidMount() {
+    // const { match: { params: { id } } } = this.props
+    // if (id)
+      axios.get(`/api/users/${this.props.auth.user.id}/videos`)
+        .then(res => {
+            debugger
+          this.setState({ videos: res.data })
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
     const video = { ...this.state, };
-    axios.post("/api/video_upload", video)
+    axios.post(`/api/users/${this.state.id}/videos`, video)
       .then( response => {
+          debugger
         this.props.history.push("/videos");
       })
       .catch( error => {
@@ -79,5 +95,17 @@ class VideoForm extends React.Component {
   }
 }
 
+export class ConnectedVideoForm extends React.Component {
+    render() {
+      return (
+        <AuthConsumer> 
+          { auth => 
+            <VideoForm { ...this.props } auth={auth} />
+          }
+        </AuthConsumer>
+      )
+    }
+  }
+  
 
-export default VideoForm;
+  export default withRouter(ConnectedVideoForm);
